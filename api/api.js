@@ -6,6 +6,7 @@ import DiscountDecorator from "./decorator.js";
 // Instância do banco
 const db = Database;
 
+// Criar usuário
 const user1 = EntityFactory.createEntity("user", {
     id: 1,
     name: "Alice",
@@ -28,11 +29,22 @@ const product2 = new ProductBuilder()
     .setCategory("Periféricos")
     .build();
 
+const product3 = new ProductBuilder()
+    .setId(3)
+    .setName("Logitech G403 Hero")
+    .setPrice(229.99)
+    .setCategory("Periféricos")
+    .build();
+   
 db.addData("products", product1);
-db.addData("products", product2);
-
-// Aplicar desconto com o Decorator
+db.addData("products", product3); 
+// Aplicar desconto no segundo produto
 const discountedProduct = new DiscountDecorator(product2).applyDiscount(15);
+
+// Remover o produto original para evitar duplicata
+db.removeData("products", product2.id);
+
+// Adicionar o produto com desconto
 db.addData("products", discountedProduct);
 
 // Criar pedido
@@ -47,6 +59,6 @@ db.addData("orders", order);
 // API Fake
 export const API = {
     getUsers: () => db.getData("users"),
-    getProducts: () => db.getData("products"),
+    getProducts: () => db.getData("products").map(product => ({ ...product })),
     getOrders: () => db.getData("orders"),
 };

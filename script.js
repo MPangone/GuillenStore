@@ -46,9 +46,10 @@ window.addEventListener("hashchange", () => {
 // Atualizar o estado inicial do menu
 updateActiveLink();
 
-// Lógica de carregamento de produtos (Exemplo com API fake)
+
 import { API } from "./api/api.js";
 
+// Lógica de carregamento de produtos
 document.addEventListener("DOMContentLoaded", () => {
     const products = API.getProducts();
 
@@ -60,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
             productContainer.innerHTML += `
                 <div class="col-md-4">
                     <div class="card product-card">
-                        <img src="/img/${product.name.toLowerCase().replace(/ /g, '-')}.webp" class="card-img-top" alt="${product.name}">
+                        <img src="/img/${product.id}.jpg" class="card-img-top" alt="${product.name}">
                         <div class="card-body text-center">
                             <h5 class="card-title">${product.name}</h5>
                             <p class="card-text">R$ ${product.price.toFixed(2)}</p>

@@ -22,6 +22,12 @@ class Database {
             this.data[type].push(item);
         }
     }
+
+    removeData(type, id) {
+        if (this.data[type]) {
+            this.data[type] = this.data[type].filter(item => item.id !== id);
+        }
+    }
 }
 
 export default new Database();
