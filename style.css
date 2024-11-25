@@ -87,6 +87,8 @@ body {
 
 /* Produtos (hover effect) */
 .product-card {
+    margin: 0 auto;
+    max-width: 95%;
     transition: transform 0.3s;
 }
 

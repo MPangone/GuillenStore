@@ -6,7 +6,6 @@ import DiscountDecorator from "./decorator.js";
 // Instância do banco
 const db = Database;
 
-// Criar usuários
 const user1 = EntityFactory.createEntity("user", {
     id: 1,
     name: "Alice",
