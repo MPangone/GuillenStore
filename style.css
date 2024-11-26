@@ -113,3 +113,9 @@ body {
 h1, h5 {
     font-weight: bold;
 }
+.cart-img {
+    width: 200px; /* Define a largura fixa */
+    height: 200px; /* Define a altura fixa */
+    object-fit: cover; /* Garante que a imagem se ajuste ao tamanho sem distorcer */
+    margin-right: 15px; /* Espaçamento entre a imagem e o texto */
+}
