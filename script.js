@@ -49,7 +49,6 @@ updateActiveLink();
 // Importa a API
 import { API } from "./api/api.js";
 
-
 // Função para adicionar produto ao carrinho
 function addToCart(productId) {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -96,6 +95,13 @@ function displayCart() {
 
         // Habilitar botão de finalizar compra se houver itens
         if (finalizeButton) finalizeButton.disabled = cart.length === 0;
+
+        // Configurar redirecionamento ao clicar no botão "Finalizar Compra"
+        if (finalizeButton) {
+            finalizeButton.addEventListener("click", () => {
+                window.location.href = "checkout.html"; // Redireciona para a tela de checkout
+            });
+        }
     }
 }
 

@@ -35,9 +35,31 @@ const product3 = new ProductBuilder()
     .setPrice(229.99)
     .setCategory("Periféricos")
     .build();
-   
+const product4 = new ProductBuilder()
+    .setId(4)
+    .setName("Teclado Mecânico Razer Blackwidow")
+    .setPrice(1089.90)
+    .setCategory("Periféricos")
+    .build();
+const product5 = new ProductBuilder()
+    .setId(5)
+    .setName("Headset Gamer Havit HV-H2002D")
+    .setPrice(160.90)
+    .setCategory("Periféricos")
+    .build();
+
+const product6 = new ProductBuilder()
+    .setId(6)
+    .setName("Monitor Gamer LG Ultragear 27 Full Hd 144hz")
+    .setPrice(1022.90)
+    .setCategory("Periféricos")
+    .build();
+    	
 db.addData("products", product1);
 db.addData("products", product3); 
+db.addData("products", product4); 
+db.addData("products", product5); 
+db.addData("products", product6); 
 // Aplicar desconto no segundo produto
 const discountedProduct = new DiscountDecorator(product2).applyDiscount(15);
 
