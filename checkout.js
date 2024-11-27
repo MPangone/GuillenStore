@@ -1,6 +1,6 @@
 import { API } from "./api/api.js";
 
-// Função para carregar o resumo da compra
+
 function loadSummary() {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const products = API.getProducts();
@@ -10,8 +10,7 @@ function loadSummary() {
     let total = 0;
 
     if (summaryContainer) {
-        summaryContainer.innerHTML = ""; // Limpar resumo
-
+        summaryContainer.innerHTML = ""; 
         cart.forEach(productId => {
             const product = products.find(p => p.id === parseInt(productId));
             if (product) {
@@ -37,7 +36,7 @@ function loadSummary() {
     }
 }
 
-// Finalizar compra
+
 document.getElementById("checkout-form").addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -66,7 +65,7 @@ document.getElementById("checkout-form").addEventListener("submit", (e) => {
     window.location.href = "index.html";
 });
 
-// Carregar resumo ao carregar a página
+
 document.addEventListener("DOMContentLoaded", () => {
     loadSummary();
 });

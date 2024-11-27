@@ -3,10 +3,10 @@ import ProductBuilder from "./builder.js";
 import EntityFactory from "./factory.js";
 import DiscountDecorator from "./decorator.js";
 
-// Instância do banco
+
 const db = Database;
 
-// Criar usuário
+
 const user1 = EntityFactory.createEntity("user", {
     id: 1,
     name: "Alice",
@@ -60,16 +60,15 @@ db.addData("products", product3);
 db.addData("products", product4); 
 db.addData("products", product5); 
 db.addData("products", product6); 
-// Aplicar desconto no segundo produto
+
 const discountedProduct = new DiscountDecorator(product2).applyDiscount(15);
 
-// Remover o produto original para evitar duplicata
 db.removeData("products", product2.id);
 
-// Adicionar o produto com desconto
+
 db.addData("products", discountedProduct);
 
-// Criar pedido
+
 const order = EntityFactory.createEntity("order", {
     id: 1,
     userId: user1.id,
@@ -78,7 +77,7 @@ const order = EntityFactory.createEntity("order", {
 });
 db.addData("orders", order);
 
-// API Fake
+
 export const API = {
     getUsers: () => db.getData("users"),
     getProducts: () => db.getData("products").map(product => ({ ...product })),

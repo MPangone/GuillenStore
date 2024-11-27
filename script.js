@@ -1,8 +1,7 @@
-// Obter o nome do arquivo atual ou âncora
+
 let currentPage = window.location.pathname.split("/").pop();
 const currentHash = window.location.hash;
 
-// Links do menu com IDs correspondentes
 const navLinks = {
     "index.html": "nav-home",
     "#produtos": "nav-produtos",
@@ -10,7 +9,6 @@ const navLinks = {
     "contato.html": "nav-contato"
 };
 
-// Função para remover a classe active de todos os links
 function clearActiveClasses() {
     Object.values(navLinks).forEach(id => {
         const element = document.getElementById(id);
@@ -20,7 +18,6 @@ function clearActiveClasses() {
     });
 }
 
-// Atualizar o estado do menu baseado na página atual ou âncora
 function updateActiveLink() {
     clearActiveClasses();
 
@@ -37,27 +34,26 @@ function updateActiveLink() {
     }
 }
 
-// Evento para monitorar mudanças na URL (ao clicar em âncoras)
 window.addEventListener("hashchange", () => {
     currentPage = window.location.pathname.split("/").pop();
     updateActiveLink();
 });
 
-// Atualizar o estado inicial do menu
+
 updateActiveLink();
 
-// Importa a API
+
 import { API } from "./api/api.js";
 
-// Função para adicionar produto ao carrinho
+
 function addToCart(productId) {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push(productId); // Adiciona o ID do produto
-    localStorage.setItem("cart", JSON.stringify(cart)); // Atualiza o localStorage
-    window.location.href = "cart.html"; // Redireciona para o carrinho
+    cart.push(productId); 
+    localStorage.setItem("cart", JSON.stringify(cart)); 
+    window.location.href = "cart.html"; 
 }
 
-// Função para exibir itens no carrinho
+
 function displayCart() {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const products = API.getProducts();
@@ -69,19 +65,25 @@ function displayCart() {
     let subtotal = 0;
 
     if (cartContainer) {
-        cartContainer.innerHTML = ""; // Limpar carrinho
+        cartContainer.innerHTML = ""; 
 
         cart.forEach(productId => {
             const product = products.find(p => p.id === parseInt(productId));
             if (product) {
                 subtotal += product.price;
+                const originalPrice = product.originalPrice || product.price; 
+                const isDiscounted = originalPrice !== product.price;
+
                 cartContainer.innerHTML += `
                 <div class="col-md-12 mb-3">
                     <div class="card d-flex flex-row align-items-center">
                         <img src="/img/${product.id}.jpg" class="cart-img" alt="${product.name}">
                         <div class="card-body">
                             <h5 class="card-title">${product.name}</h5>
-                            <p class="card-text">R$ ${product.price.toFixed(2)}</p>
+                            <p class="card-text">
+                                ${isDiscounted ? `<del>R$ ${originalPrice.toFixed(2)}</del>` : ""}
+                                <strong>R$ ${product.price.toFixed(2)}</strong>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -89,35 +91,29 @@ function displayCart() {
             }
         });
 
-        // Atualizar subtotal e total
         if (subtotalElement) subtotalElement.textContent = `R$ ${subtotal.toFixed(2)}`;
         if (totalElement) totalElement.textContent = `R$ ${subtotal.toFixed(2)}`;
 
-        // Habilitar botão de finalizar compra se houver itens
         if (finalizeButton) finalizeButton.disabled = cart.length === 0;
 
-        // Configurar redirecionamento ao clicar no botão "Finalizar Compra"
         if (finalizeButton) {
             finalizeButton.addEventListener("click", () => {
-                window.location.href = "checkout.html"; // Redireciona para a tela de checkout
+                window.location.href = "checkout.html"; 
             });
         }
     }
 }
 
-// Função para limpar o carrinho
 function clearCart() {
     localStorage.removeItem("cart");
     alert("Carrinho limpo!");
-    displayCart(); // Atualiza o carrinho dinamicamente
+    displayCart();
 }
 
 // Lógica de carregamento de produtos
 document.addEventListener("DOMContentLoaded", () => {
     if (currentPage === "cart.html") {
-        displayCart(); // Exibir itens no carrinho
-
-        // Configurar botão de limpar carrinho
+        displayCart(); 
         const clearCartButton = document.getElementById("clear-cart");
         if (clearCartButton) {
             clearCartButton.addEventListener("click", clearCart);
@@ -126,16 +122,22 @@ document.addEventListener("DOMContentLoaded", () => {
         const products = API.getProducts();
         const productContainer = document.getElementById("produtos-container");
         if (productContainer) {
-            productContainer.innerHTML = ""; // Limpar container
+            productContainer.innerHTML = ""; 
 
             products.forEach(product => {
+                const originalPrice = product.originalPrice || product.price; 
+                const isDiscounted = originalPrice !== product.price;
+
                 productContainer.innerHTML += `
                     <div class="col-md-4">
                         <div class="card product-card">
                             <img src="/img/${product.id}.jpg" class="card-img-top" alt="${product.name}">
                             <div class="card-body text-center">
                                 <h5 class="card-title">${product.name}</h5>
-                                <p class="card-text">R$ ${product.price.toFixed(2)}</p>
+                                <p class="card-text">
+                                    ${isDiscounted ? `<del>R$ ${originalPrice.toFixed(2)}</del>` : ""}
+                                    <strong>R$ ${product.price.toFixed(2)}</strong>
+                                </p>
                                 <button class="btn btn-outline-primary" onclick="addToCart(${product.id})">Comprar</button>
                             </div>
                         </div>

@@ -3,10 +3,13 @@ class DiscountDecorator {
         this.product = product;
     }
 
-    applyDiscount(percentage) {
-        const discountAmount = (this.product.price * percentage) / 100;
-        this.product.price -= discountAmount;
-        return this.product;
+    applyDiscount(discountPercentage) {
+        const discountedPrice = this.product.price * (1 - discountPercentage / 100);
+        return {
+            ...this.product,
+            price: parseFloat(discountedPrice.toFixed(2)), 
+            originalPrice: this.product.price, 
+        };
     }
 }
 
